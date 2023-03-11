@@ -4,16 +4,38 @@ plugins {
 
 group 'org.example'
 version '1.0-SNAPSHOT'
+sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+ext{
+    logbackVersion = '1.4.1'
+    springVersion = '5.3.23'
+    lombokVersion = '1.18.24'
+    junitVersion = '5.9.0'
+    mockitoVersion = '4.8.0'
+    postgresqlDriverVersion = '42.5.1'
+    hibernateVersion ='6.1.7.Final'
+
 }
 
+dependencies {
+    implementation "ch.qos.logback:logback-classic:$logbackVersion"
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    implementation "org.hibernate.orm:hibernate-core:$hibernateVersion"
+    implementation "org.postgresql:postgresql:$postgresqlDriverVersion"
+    testCompileOnly "org.projectlombok:lombok:$lombokVersion"
+    testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+}
 test {
     useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
+compileJava.options.encoding = 'UTF-8'
