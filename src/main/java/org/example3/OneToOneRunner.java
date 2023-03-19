@@ -1,7 +1,7 @@
 package org.example3;
 
 
-public class ExampleRunner {
+public class OneToOneRunner {
     public static void main(String[] args) {
 
         CustomerRepository customerRepository = new CustomerRepository();
