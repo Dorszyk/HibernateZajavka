@@ -29,8 +29,8 @@ public class ManyToManyRunner {
         employeeRepository.listEmployees()
                 .forEach(employee -> System.out.println("###Employee listing: " + employee));
 
-      //  employeeRepository.deleteEmployee(employeesCreated
-     //           .get(employeesCreated.size() - 2).getEmployeeID());
+        employeeRepository.deleteEmployee(employeesCreated
+               .get(employeesCreated.size()-1).getEmployeeID());
 
         employeeRepository.listEmployees()
                 .forEach(employee -> System.out.println("###Employee listing: " + employee));
@@ -44,14 +44,18 @@ public class ManyToManyRunner {
         Project project1 = ExampleData.project1();
         Project project2 = ExampleData.project2();
         Project project3 = ExampleData.project3();
+        Project project4 = ExampleData.project4();
         Employee employee1 = ExampleData.someEmployee1();
         Employee employee2 = ExampleData.someEmployee2();
         Employee employee3 = ExampleData.someEmployee3();
+        Employee employee4 = ExampleData.someEmployee4();
+
         employee1.setProjects(Set.of(project1, project2));
         employee2.setProjects(Set.of(project2));
         employee3.setProjects(Set.of(project2, project3));
+        employee4.setProjects(Set.of(project4));
 
-        return employeeRepository.insertData(List.of(employee1, employee2, employee3));
+        return employeeRepository.insertData(List.of(employee1, employee2, employee3,employee4));
     }
 
     private static void updateEmployees(

@@ -14,7 +14,12 @@ public class EmployeeRepository {
                 throw new RuntimeException("Session is null");
             }
             session.beginTransaction();
-            employees.forEach(session::persist);
+            employees.forEach(employee -> {
+                System.out.println("###BEFORE INSERT\n-----------------------------");
+                employee.getProjects().forEach(session::persist);
+                session.persist(employee);
+                System.out.println("--------------------------------\n###AFTER INSERT");
+            });
             session.getTransaction().commit();
             return employees;
         }
@@ -46,10 +51,12 @@ public class EmployeeRepository {
             if (Objects.isNull(session)) {
                 throw new RuntimeException("Session is null");
             }
+            System.out.println("###BEFORE UPDATE\n-----------------------------");
             session.beginTransaction();
             Employee employee = session.find(Employee.class, employeeId);
             employee.getProjects().add(newProject);
             session.getTransaction().commit();
+            System.out.println("###AFTER UPDATE\n-----------------------------");
         }
     }
 
@@ -58,9 +65,13 @@ public class EmployeeRepository {
             if (Objects.isNull(session)) {
                 throw new RuntimeException("Session is null");
             }
+            System.out.println("###BEFORE DELETE EMPLOYEE\n-----------------------------");
             session.beginTransaction();
-            session.remove(session.find(Employee.class, employeeId));
+            Employee employee = session.find(Employee.class,employeeId);
+            employee.getProjects().forEach(session::remove);
+            session.remove(employee);
             session.getTransaction().commit();
+            System.out.println("###AFTER DELETE EMPLOYEE\n-----------------------------");
         }
     }
 
@@ -69,10 +80,12 @@ public class EmployeeRepository {
             if (Objects.isNull(session)) {
                 throw new RuntimeException("Session is null");
             }
+            System.out.println("###BEFORE DELETE ALL\n-----------------------------");
             session.beginTransaction();
             String query = "select employee from Employee employee";
             session.createQuery(query, Employee.class).list().forEach(session::remove);
             session.getTransaction().commit();
+            System.out.println("###BEFORE AFTER ALL\n-----------------------------");
         }
     }
 }

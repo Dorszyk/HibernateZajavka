@@ -33,6 +33,14 @@ public class ExampleData {
                 .since(OffsetDateTime.of(2022, 3, 3, 10, 10, 10, 0, ZoneOffset.UTC))
                 .build();
     }
+    static Employee someEmployee4() {
+        return Employee.builder()
+                .name("Piotr")
+                .surname("Dorszyk")
+                .salary(new BigDecimal("9500.69"))
+                .since(OffsetDateTime.of(2022, 3, 3, 10, 10, 10, 0, ZoneOffset.UTC))
+                .build();
+    }
 
     static Project project1() {
         return Project.builder()
@@ -55,6 +63,14 @@ public class ExampleData {
                 .name("Email sending refactoring")
                 .description("Nulla maximus ac tellus nec elementum")
                 .deadline(OffsetDateTime.of(2024, 4, 2, 12, 0, 0, 0, ZoneOffset.UTC))
+                .build();
+    }
+
+    static Project project4() {
+        return Project.builder()
+                .name("Mather Fucker")
+                .description("CO JEST GRANE ")
+                .deadline(OffsetDateTime.of(2080, 4, 2, 12, 0, 0, 0, ZoneOffset.UTC))
                 .build();
     }
 }
