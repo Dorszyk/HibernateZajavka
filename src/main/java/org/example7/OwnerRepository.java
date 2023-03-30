@@ -101,11 +101,72 @@ public class OwnerRepository {
             session.beginTransaction();
             String select5_1 = "select ow from Owner ow order by ow.email DESC" ;
             List<Owner> owners = session.createQuery(select5_1, Owner.class)
-                    .setFirstResult(1)
-                    .setMaxResults(3)
+                    .setFirstResult(0)
+                    .setMaxResults(10)
                     .getResultList();
             session.getTransaction().commit();
             return owners;
+        }
+    }
+
+    void saveTestData() {
+        try (Session session = SelectHQLOneToMany.getSession()) {
+            if (Objects.isNull(session)) {
+                throw new RuntimeException("Session is null");
+            }
+            session.beginTransaction();
+
+            Toy toy1 = ExampleData.someToy1();
+            Toy toy2 = ExampleData.someToy2();
+            Toy toy3 = ExampleData.someToy3();
+            Toy toy4 = ExampleData.someToy4();
+            session.persist(toy1);
+            session.persist(toy2);
+            session.persist(toy3);
+            session.persist(toy4);
+
+
+            Pet pet1 = ExampleData.somePet1();
+            Pet pet2 = ExampleData.somePet2();
+            Pet pet3 = ExampleData.somePet3();
+            Pet pet4 = ExampleData.somePet4();
+            pet1.setToys(Set.of(toy1,toy2));
+            pet2.setToys(Set.of(toy2,toy3));
+            pet3.setToys(Set.of(toy1,toy2,toy3));
+            pet4.setToys(Set.of(toy2,toy3,toy4));
+
+            Owner owner1 = ExampleData.someOwner1();
+            Owner owner2 = ExampleData.someOwner2();
+            owner1.setPets(Set.of(pet1,pet2));
+            owner2.setPets(Set.of(pet3,pet4));
+            owner1.getPets().forEach(pet -> pet.setOwner(owner1));
+            owner2.getPets().forEach(pet -> pet.setOwner(owner2));
+            session.persist(owner1);
+            session.persist(owner2);
+
+            session.getTransaction().commit();
+
+
+        }
+    }
+
+    public void selectExample8() {
+        try (Session session = SelectHQLOneToMany.getSession()) {
+            if (Objects.isNull(session)) {
+                throw new RuntimeException("Session is null");
+            }
+
+            session.beginTransaction();
+            String select8 = """
+                    select ow from Owner ow
+                    inner join fetch ow.pets pt
+                    inner join fetch pt.toys ts
+                    """;
+            session.createQuery(select8, Owner.class)
+                    .getResultList()
+                    .forEach(entity -> System.out.println("###ENTITY: " + entity));
+
+            session.getTransaction().commit();
         }
     }
 }

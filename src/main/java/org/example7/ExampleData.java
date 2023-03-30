@@ -77,4 +77,33 @@ public class ExampleData {
                 .build();
     }
 
+    public static Toy someToy1() {
+        return Toy.builder()
+                .what("dog")
+                .color("black")
+                .build();
+
+    }
+    public static Toy someToy2() {
+        return Toy.builder()
+                .what("cat")
+                .color("white")
+                .build();
+
+    }
+    public static Toy someToy3() {
+        return Toy.builder()
+                .what("bear")
+                .color("green")
+                .build();
+
+    }
+    public static Toy someToy4() {
+        return Toy.builder()
+                .what("duck")
+                .color("blue")
+                .build();
+
+    }
+
 }

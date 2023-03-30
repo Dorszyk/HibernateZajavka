@@ -3,6 +3,8 @@ package org.example7;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 
 @Setter
 @Getter
@@ -30,5 +32,13 @@ public class Pet {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "pet_toy",
+            joinColumns = {@JoinColumn(name = "pet_id")},
+            inverseJoinColumns = {@JoinColumn(name = "toy_id")}
+    )
+
+    private Set<Toy> toys;
 
 }

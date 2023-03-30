@@ -7,6 +7,8 @@ public class OneToManyHqlSelect {
 
         OwnerRepository ownerRepository = new OwnerRepository();
 
+        ownerRepository.selectExample8();
+
       //  ownerRepository.insertData( ExampleData.someOwner3(),Set.of());
       //  ownerRepository.insertData( ExampleData.someOwner4(),Set.of());
       //  ownerRepository.insertData( ExampleData.someOwner5(),Set.of());
@@ -25,8 +27,8 @@ public class OneToManyHqlSelect {
        // ownerRepository.selectExample2()
         //       .forEach(entity -> System.out.println("###Entity: " +(entity)));
 
-       ownerRepository.selectExample5()
-                       .forEach(entity -> System.out.println("###Entity: " +(entity)));
+      // ownerRepository.selectExample5()
+      //                 .forEach(entity -> System.out.println("###Entity: " +(entity)));
 
         SelectHQLOneToMany.closeSessionFactory();
     }

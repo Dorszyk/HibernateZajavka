@@ -20,7 +20,7 @@ public class SelectHQLOneToMany {
             Map.entry(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect"),
             Map.entry(Environment.HBM2DDL_AUTO, "none"),
             Map.entry(Environment.SHOW_SQL, true),
-            Map.entry(Environment.FORMAT_SQL, false)
+            Map.entry(Environment.FORMAT_SQL, true)
 
     );
 
@@ -35,6 +35,7 @@ public class SelectHQLOneToMany {
             Metadata metadata = new MetadataSources(serviceRegistry)
                     .addAnnotatedClass(Pet.class)
                     .addAnnotatedClass(Owner.class)
+                    .addAnnotatedClass(Toy.class)
                     .getMetadataBuilder()
                     .build();
             return metadata
