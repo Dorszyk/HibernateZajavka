@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 
 import jakarta.persistence.NamedQuery;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
 
 import java.util.Set;
 
 @Setter
 @Getter
-@ToString(exclude = "pet")
+@ToString
 @Entity
 @Builder
 @NoArgsConstructor
@@ -46,7 +47,8 @@ public class Owner {
     @Column(name = "email")
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner", cascade = CascadeType.ALL)
+    @Fetch(value = org.hibernate.annotations.FetchMode.JOIN)
     private Set<Pet> pets;
 
 }

@@ -2,6 +2,8 @@ package org.example8;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+
 import java.util.Set;
 
 
@@ -37,6 +39,7 @@ public class Pet {
             joinColumns = {@JoinColumn(name = "pet_id")},
             inverseJoinColumns = {@JoinColumn(name = "toy_id")}
     )
+    @Fetch(value = org.hibernate.annotations.FetchMode.JOIN)
 
     private Set<Toy> toys;
 
