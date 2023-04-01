@@ -25,7 +25,7 @@ public class ExampleData {
                 .surname("Dorszyk")
                 .phone("+48 321 654 987")
                 .email("piotr@zajavka.pl")
-                .address(someAddress2())
+                .address(someAddress1())
                 .build();
     }
     static Customer someCustomer2(){
