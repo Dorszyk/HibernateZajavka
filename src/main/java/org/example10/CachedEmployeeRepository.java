@@ -2,9 +2,11 @@ package org.example10;
 
 
 import org.hibernate.Session;
+import org.hibernate.stat.Statistics;
 
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class CachedEmployeeRepository {
 
@@ -71,6 +73,30 @@ public class CachedEmployeeRepository {
         }
 
     }
+
+    Optional<CachedEmployee> levelTwoCached(int employeeId) {
+
+        try (Session session = CachedHibernateUtil.getSession()) {
+            if (Objects.isNull(session)) {
+                throw new RuntimeException("Session is null");
+            }
+            session.beginTransaction();
+
+            CachedEmployee e1 = session.find(CachedEmployee.class, employeeId);
+            stats(CachedHibernateUtil.getStatistics());
+            System.out.printf("###E1 %s %s%n", e1.getName(), e1.getSurname());
+            session.getTransaction().commit();
+
+            return Optional.of(e1);
+        }
+    }
+
+    private void stats(Statistics statistics) {
+        System.out.println("Misses in 2LC: " + statistics.getSecondLevelCacheMissCount());
+        System.out.println("Added in 2LC: " + statistics.getSecondLevelCachePutCount());
+        System.out.println("Found in 2LC: " + statistics.getSecondLevelCacheHitCount());
+    }
+
 
     public void deleteAll() {
         try (Session session = CachedHibernateUtil.getSession()) {

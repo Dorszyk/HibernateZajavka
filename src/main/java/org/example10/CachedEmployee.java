@@ -2,6 +2,9 @@ package org.example10;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cache;
+
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
@@ -12,6 +15,8 @@ import java.time.OffsetDateTime;
 @Entity
 @Builder
 @NoArgsConstructor
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @AllArgsConstructor
 @Table(name = "cached_employee")
 public class CachedEmployee {
