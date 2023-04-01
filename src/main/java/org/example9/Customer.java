@@ -5,6 +5,8 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString(exclude = "address")
+@EqualsAndHashCode(of = "email")
 @Entity
 @Builder
 @NoArgsConstructor

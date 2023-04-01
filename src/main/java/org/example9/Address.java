@@ -3,9 +3,10 @@ package org.example9;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 @Getter
 @Setter
+@ToString(exclude = "customer")
+@EqualsAndHashCode(of = "address")
 @Entity
 @Builder
 @NoArgsConstructor
@@ -25,6 +26,6 @@ public class Address {
     @Column(name = "address")
     private String  address;
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "address",cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "address")
     private Customer customer;
 }

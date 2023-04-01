@@ -15,7 +15,7 @@ public class CustomerRepository {
     Customer insertCustomer(final Customer customer) {
         try (Session session = ExceptionOneToOne.getSession()) {
             if (Objects.isNull(session)) {
-                throw new RuntimeException("Session is null");
+                throw new PersistenceException("Session is null");
             }
             System.out.println("###BEFORE INSERT\n------------------------------");
             session.beginTransaction();
@@ -25,11 +25,11 @@ public class CustomerRepository {
             return customer;
         } catch (PersistenceException ex) {
             JDBCException jdbcException = (JDBCException) ex.getCause();
-            System.err.println(jdbcException.getSQL());
-            System.err.println(jdbcException.getSQLState());
+            System.err.println("jdbcException.getSQL: " + jdbcException.getSQL());
+            System.err.println("jdbcException.getSQLState" + jdbcException.getSQLState());
             SQLException sqlException = jdbcException.getSQLException();
-            System.err.println(sqlException.getErrorCode());
-            System.err.println(sqlException.getMessage());
+            System.err.println("sqlException.getErrorCode" + sqlException.getErrorCode());
+            System.err.println("sqlException.getMessage"+ sqlException.getMessage());
             return null;
         }
     }
