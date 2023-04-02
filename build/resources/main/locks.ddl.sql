@@ -4,6 +4,7 @@ create table event
     event_name varchar(32)              not null,
     date_time  timestamp with time zone not null,
     capacity   int                      not null,
+    version    int                      not null,
     primary key (event_id),
     UNIQUE (event_name)
 );

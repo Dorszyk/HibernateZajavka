@@ -6,6 +6,7 @@ import jakarta.persistence.criteria.CriteriaDelete;
 import org.hibernate.Session;
 
 
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 public class EventRepository {
@@ -63,5 +64,18 @@ public class EventRepository {
             session.persist(ticketEntity);
             session.getTransaction().commit();
         }
+    }
+
+    void changeDateTime(OffsetDateTime newDataTime, Long eventId){
+        try (Session session = HibernateEvent.getSession()) {
+            if (Objects.isNull(session)) {
+                throw new RuntimeException("Session is null");
+            }
+            session.beginTransaction();
+            EventEntity eventEntity = session.find(EventEntity.class, eventId);
+            eventEntity.setDateTime(newDataTime);
+            session.getTransaction().commit();
+        }
+
     }
 }
