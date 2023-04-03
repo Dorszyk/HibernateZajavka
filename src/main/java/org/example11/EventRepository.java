@@ -1,12 +1,16 @@
 package org.example11;
 
 
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaDelete;
+import org.hibernate.LockMode;
 import org.hibernate.Session;
 
 
 import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class EventRepository {
@@ -53,6 +57,9 @@ public class EventRepository {
 
 
             EventEntity eventEntity = session.find(EventEntity.class, eventId);
+            Map<String, Object> properties = new HashMap<>();
+            properties.put("javax.persistence.lock.timeout",1000L);
+            session.lock(eventEntity, LockModeType.PESSIMISTIC_WRITE,properties);
             if (eventEntity.getCapacity() <= eventEntity.getTickets().size()) {
                 throw new RuntimeException("Capacity exceeded");
             }
